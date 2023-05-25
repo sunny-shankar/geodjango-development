@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<div class="w-1/2 bg-white mx-auto flex justify-center items-center py-10 rounded-xl shadow">
+    <form class="form-control w-full max-w-xs" method="POST">
+        {% csrf_token %}
+        
+        <div>
+            <label class="label">
+            <span class="label-text">Address:</span>
+            </label>
+            <input type="text" placeholder="City,Country" class="input input-bordered input-info w-full max-w-xs" name="address" />
+        </div>
+        <button class="btn btn-primary my-10">Button</button>
+    </form>
+</div>
+{% endblock main %}

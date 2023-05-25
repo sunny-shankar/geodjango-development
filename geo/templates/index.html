@@ -1,0 +1,16 @@
+{%extends 'base.html'%} 
+{% load leaflet_tags %}
+{%block main%}
+<script>
+    function map_init_basic (map, options) {
+        {% for data in results  %}
+        console.log({{data.latitude}},{{data.longitude}})
+            L.marker([{{data.latitude}},{{data.longitude}}]).addTo(map).bindPopup("<b>{{data.name}}<b><br/>")
+        
+        {% endfor %}
+    }
+</script>
+<div class="bg-white w-1/2 mx-auto shadow rounded">
+    {% leaflet_map "map" callback="window.map_init_basic"  %}
+</div>
+{%endblock%}

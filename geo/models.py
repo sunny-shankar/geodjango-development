@@ -13,4 +13,8 @@ class BaseModel(models.Model):
 
 
 class GeoLocations(BaseModel):
+    name = models.CharField(max_length=100)
     location = models.PointField(geography=True)
+
+    def __str__(self) -> str:
+        return self.name
