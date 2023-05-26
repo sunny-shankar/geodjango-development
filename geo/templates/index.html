@@ -4,9 +4,12 @@
 <script>
     function map_init_basic (map, options) {
         {% for data in results  %}
-        console.log({{data.latitude}},{{data.longitude}})
-            L.marker([{{data.latitude}},{{data.longitude}}]).addTo(map).bindPopup("<b>{{data.name}}<b><br/>")
-        
+            {% if data.forecast %}
+                L.marker([{{data.latitude}},{{data.longitude}}]).addTo(map).bindPopup( "<b>{{data.name}}</b><br/> <b>Humidity:</b> {{data.forecast.relativeHumidity.value}} % <br/> <b> Temprature:</b> {{data.forecast.temperature}} {{data.forecast.temperatureUnit}}");
+                {% else %}
+                L.marker([{{data.longitude}},{{data.latitude}}]).addTo(map).bindPopup( "<b>{{data.name}}</b><br/> Data Not available..");
+
+            {% endif %}
         {% endfor %}
     }
 </script>

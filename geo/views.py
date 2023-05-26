@@ -6,22 +6,26 @@ from django.contrib.gis.geos import Point
 from django.core.serializers import serialize
 import requests
 
-geolocator = Nominatim(user_agent="GetLoc")
+geolocator = Nominatim(user_agent="geoapiExercises")
 
 
 def insert_data(requests):
     if requests.method == "POST":
-        address = requests.POST.get("address")
-        if not address:
-            return HttpResponse("Required Address")
-        location = get_location(address)
-        print(location.latitude, location.longitude)
-        print(
-            GeoLocations.objects.create(
-                name=location.address,
-                location=Point(location.latitude, location.longitude),
+        try:
+            address = requests.POST.get("address")
+            if not address:
+                return HttpResponse("Required Address")
+            location = get_location(address)
+            print(location.latitude, location.longitude)
+            print(
+                GeoLocations.objects.create(
+                    name=location.address,
+                    location=Point(location.latitude, location.longitude),
+                )
             )
-        )
+        except Exception as err:
+            print(err)
+            return render(requests, "error.html", {})
 
     return render(requests, "form.html", {})
 
